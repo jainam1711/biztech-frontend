@@ -30,7 +30,7 @@ export class ListComponent implements OnInit {
     this.spinner.show();
     if (page === 1) { this.repositories = []; }
 
-    const octokit = new Octokit({ auth: `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` });
+    const octokit = new Octokit({ auth: `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` });
     const { data: { items, total_count } } = await octokit.request(this.apiURL, {
       page, q: this.searchObj.search || 'Biztech'
     });
