@@ -1,0 +1,49 @@
+<form class="p-5">
+    <h2 class="d-flex justify-content-center"><u>GitHub Repositories</u></h2>
+    <div class="form-group form-inline">
+        Search:
+        <input type="text" name="search" [(ngModel)]="searchObj.search"
+            (keyup.enter)="getRepositories()" class="form-control ml-2"
+            placeholder="Type and press enter..." />
+    </div>
+
+    <table class="table table-striped" *ngIf="repositories?.length; else noContent">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Repo Name</th>
+                <th scope="col">Language</th>
+                <th scope="col">Visibility</th>
+                <th scope="col">Forks</th>
+                <th scope="col">Open Issues</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let repo of repositories; let index=index">
+                <th scope="row">{{ index + 1 }}</th>
+                <td>{{repo?.name}}</td>
+                <td>{{ repo?.language }}</td>
+                <td>{{ repo?.visibility | titlecase }}</td>
+                <td>{{ repo?.forks_count || '-' }}</td>
+                <td>{{ repo?.open_issues_count || '-' }}</td>
+                <td><a [href]="repo?.url" target="_blank">Check Details</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ng-template #noContent>
+        <div class="d-flex justify-content-center">
+            <h5 class="p-2">
+                No content available! Please try searching with a different keyword.
+            </h5>
+        </div>
+    </ng-template>
+
+    <div class="d-flex justify-content-center p-2" *ngIf="showLoadMore">
+        <button class="btn btn-primary" (click)="getRepositories(page+1)">
+            Load More...
+        </button>
+    </div>
+
+</form>
